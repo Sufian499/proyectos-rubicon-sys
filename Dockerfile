@@ -7,4 +7,4 @@ RUN apt-get update && apt-get install -y \
 COPY velneo-lin64-vserver-setup-31.1.3.d249d02c.tar.gz velneo-lin64-vserver-setup-31.1.3.d249d02>
 RUN tar -zxf velneo-lin64-vserver-setup-31.1.3.d249d02c.tar.gz
 EXPOSE 690
-RUN sh Velneo-vServer/vServer.sh
+RUN Velneo-vServer/vServer.sh
