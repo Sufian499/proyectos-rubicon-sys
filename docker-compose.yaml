@@ -4,4 +4,4 @@ service:
   vserver:
     image: sufian499/vserver:latest
     ports: 
-      - 690:690
+      - "690:690"
