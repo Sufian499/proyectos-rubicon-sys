@@ -15,13 +15,6 @@
     debug:
       msg: "El proceso vServer está  {{ 'en ejecución' if pgrep_result.rc == 0 else 'detenido' }}"
 
-  - name: Incrementar contador
-    lineinfile:
-      path: /etc/ansible/count
-      create: yes
-      state: present
-      line: "{{ (lookup('file', '/etc/ansible/count') | int + 1) }}"
-
   - name: Reiniciar
     shell: /home/user/velneo/Velneo-vServer/vServer.sh -t && /home/user/velneo/Velneo-vServer/vServer>
     when: pgrep_result.rc != 0
