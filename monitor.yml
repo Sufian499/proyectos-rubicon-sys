@@ -1,8 +1,10 @@
+  GNU nano 6.2                                  monitor.yml                                           
 ---
 - name: Monitor vserver
   hosts: remote_server
   become: yes
   tasks:
+
   - name: Verificar proceso
     remote_user: root
     shell: pgrep -x vServer
@@ -12,26 +14,16 @@
   - name: Imprimir resultado
     debug:
       msg: "El proceso vServer está  {{ 'en ejecución' if pgrep_result.rc == 0 else 'detenido' }}"
-#  - name: Actualizar contador
-#    shell: |
-#      current_count=$(jq -r '.count' /home/user/counter.json)
-#      new_count=$((current_count+1))
-#      jq -n --argjson count "$new_count" '{"count": $count}' > /home/user/counter.json
+
   - name: Incrementar contador
-    command: echo $(( $(cat /etc/ansible/count) + 1 )) > /etc/ansible/count
-    changed_when: false
-  - name: Incrementar 
     lineinfile:
       path: /etc/ansible/count
       create: yes
       state: present
       line: "{{ (lookup('file', '/etc/ansible/count') | int + 1) }}"
-#  - name: Actualizar contador
-#    lineinfile:
-#      path: /etc/ansible/counter.json
-#      regexp: '"count": ([0-9]+)'
-#      line: '"count": "{{ (match.group(1) | int + 1) }}"'
-#
+
   - name: Reiniciar
-    shell: /home/user/velneo/Velneo-vServer/vServer.sh -t && /home/user/velneo/Velneo-vServer/vServer.sh -s
+    shell: /home/user/velneo/Velneo-vServer/vServer.sh -t && /home/user/velneo/Velneo-vServer/vServer>
     when: pgrep_result.rc != 0
+
+
