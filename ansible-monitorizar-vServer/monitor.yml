@@ -15,7 +15,8 @@
 #      msg: "El proceso vServer está  {{ 'en ejecución' if pgrep_result.rc == 0 else 'detenido' }}"
 
   - name: Almacenar resultado en archivo
-    local_action: copy content="{{ 'El proceso vServer está  en ejecución' if pgrep_result.rc == 0 else 'El proceso >
+    local_action: copy content="{{ 'El proceso vServer está  en ejecución' if pgrep_result.rc == 0 else 'El proceso vServer está detenido' }}" dest="./resultado.txt"
+
 
   - name: Reiniciar
     shell: /home/user/velneo/Velneo-vServer/vServer.sh -t && /home/user/velneo/Velneo-vServer/vServer.sh -s
