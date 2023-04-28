@@ -3,6 +3,9 @@
   hosts: remote_server
   become: yes
   tasks:
+  - name: Extraer segunda línea del archivo
+    shell: sed -n '2p' /opt/contador/datos.txt
+    register: second_line_output
 
   - name: Verificar proceso
     remote_user: root
@@ -10,14 +13,17 @@
     register: pgrep_result
     ignore_errors: yes
 
-#  - name: Imprimir resultado
-#    debug:
-#      msg: "El proceso vServer está  {{ 'en ejecución' if pgrep_result.rc == 0 else 'detenido' }}"
-
   - name: Almacenar resultado en archivo
-    local_action: copy content="{{ 'El proceso vServer está  en ejecución' if pgrep_result.rc == 0 else 'El proceso vServer está detenido' }}" dest="./resultado.txt"
-
+    local_action: copy content="{{ 'El proceso vServer está  en ejecución' if pgrep_result.rc == 0 else 'El proceso vServer está detenido  ' }}" dest="./resul>
 
   - name: Reiniciar
     shell: /home/user/velneo/Velneo-vServer/vServer.sh -t && /home/user/velneo/Velneo-vServer/vServer.sh -s
-    when: pgrep_result.rc != 0
+    when: pgrep_result.rc != 0 and second_line_output.stdout_lines[0] != '3'
+
+  - name: Aumentar contador
+    shell: /opt/contador/updateCount.sh
+    args:
+      chdir: /opt/contador/ 
+    run_once: true
+    when: pgrep_result.rc != 0 and second_line_output.stdout_lines[0] != '3'
+
