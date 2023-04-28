@@ -27,3 +27,8 @@
     run_once: true
     when: pgrep_result.rc != 0 and second_line_output.stdout_lines[0] != '3'
 
+  - name: Almacenar resultado en archivo
+    local_action: copy content="{{ 'vServer caído 3 veces.' }}" dest="./vServer_caido.txt"
+    when: pgrep_result.rc != 0 and second_line_output.stdout_lines[0] == '3'
+
+
