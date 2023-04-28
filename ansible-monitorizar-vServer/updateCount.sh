@@ -1,6 +1,6 @@
 #!/bin/bash
 # Leer la primera línea del archivo y almacenarla en una variable
-fecha_archivo=$(head -n 1 datos.txt)
+fecha_archivo=$(head -n 1 /opt/contador/datos.txt)
 
 # Obtener la hora actual en el mismo formato que la primera línea del archivo
 fecha_actual=$(date '+%F %T')
@@ -17,11 +17,11 @@ diferencia_horas=$(($diferencia / 3600))
 
 # Si la diferencia es mayor o igual a 1 hora, cambiar el contador a cero
 if [ $diferencia_horas -ge 1 ]; then
-  sed -i '2s/.*/0/' datos.txt
+  sed -i '2s/.*/0/' /opt/contador/datos.txt
 else
    contador_anterior=$(sed -n '2p' datos.txt)
    contador=$((contador_anterior + 1))
 fi
 
-echo "$fecha_actual" > datos.txt
-echo "$contador" >> datos.txt
+echo "$fecha_actual" > /opt/contador/datos.txt
+echo "$contador" >> /opt/contador/datos.txt
