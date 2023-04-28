@@ -2,9 +2,17 @@
 
 fecha_actual=$(date '+%F %T')
 contador=0
+DIRECTORIO=/opt/contador 
 
-echo "$fecha_actual" > datos.txt
-echo "$contador" >> datos.txt
+if [ -d "$DIRECTORIO" ]
+then
+echo "$fecha_actual" > /opt/contador/datos.txt
+echo "$contador" >> /opt/contador/datos.txt
+else
+mkdir /opt/contador 
+echo "$fecha_actual" > /opt/contador/datos.txt
+echo "$contador" >> /opt/contador/datos.txt
+fi
 
 
 
